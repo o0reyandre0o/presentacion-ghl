@@ -136,12 +136,14 @@
         .text-gradient-blue {
             background: linear-gradient(135deg, #38bdf8, #818cf8);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .text-gradient-green {
             background: linear-gradient(135deg, #10b981, #34d399);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -192,17 +194,18 @@
         .img-card img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
+            background-color: rgba(0,0,0,0.2);
         }
 
         .img-card.large {
             grid-column: span 2;
-            height: 300px;
+            height: 400px;
         }
 
         .img-card.small {
-            height: 200px;
+            height: 250px;
         }
 
         /* Info blocks */
