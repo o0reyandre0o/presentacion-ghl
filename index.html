@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GHL + n8n Presentación Interactiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+/* 1. THE SETUP */
+
+* {
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+body {
+  background-color: #e2e8f0;
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr;
+  margin: 0;
+  min-height: 100vh;
+  padding: 30px 0;
+  place-items: center;
+}
+
+.slide-container {
+  align-items: center;
+  background-color: #020617; 
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Urbanist', sans-serif;
+  height: 720px;
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px 80px; 
+  position: relative;
+  width: 1280px;
+}
+
+.slide-container::before {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+.slide-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 2. CONSISTENT TYPOGRAPHY */
+
+.slide-container h1,
+.slide-container h2,
+.slide-container h3,
+.slide-container h4 {
+  color: #f8fafc;
+  font-weight: 700;
+  font-family: 'Urbanist', sans-serif;
+  margin: 0;
+}
+
+.text-accent-blue { color: #38bdf8; }
+.text-accent-green { color: #10b981; }
+
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle {
+  color: #cbd5e1;
+  font-family: 'Urbanist', sans-serif;
+}
+
+.slide-container h1 {
+  font-size: 70px;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.slide-container .slide-title {
+  font-size: 52px;
+  font-weight: 800;
+  margin-bottom: 30px;
+  text-align: left;
+  width: 100%;
+}
+
+.slide-container h3 {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.slide-container p,
+.slide-container li,
+.slide-container .subtitle,
+.slide-container .bleed-text-side p {
+  font-size: 18px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.slide-container .subtitle {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0 auto 20px;
+  color: #94a3b8;
+}
+
+.slide-container .content-area {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: center;
+  width: 100%;
+}
+
+/* 3. LAYOUT DEFINITIONS */
+
+.two-column {
+  align-items: stretch;
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 40px;
+  width: 100%;
+}
+
+/* `Bleed_Image_Right` layout (Slide 1 y 3) */
+.slide-container.bleed-image-layout {
+  align-items: start;
+  display: grid;
+  gap: 0; 
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0; 
+}
+
+.slide-container.bleed-image-layout > .content-container {
+  padding: 80px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.slide-container.bleed-image-layout > .image-container {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.slide-container.bleed-image-layout img.bleed-image-side {
+  display: block;
+  height: 720px; 
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+}
+
+.slide-container.bleed-image-layout .bleed-text-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slide-container.bleed-image-layout .bleed-text-side p {
+  margin-bottom: 1.2rem;
+}
+
+/* Custom Text Blocks for Slide 2 */
+.info-block {
+    background-color: rgba(30, 41, 59, 0.5); 
+    border-left: 4px solid #38bdf8;
+    border-radius: 0 12px 12px 0;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.info-block.green-accent {
+    border-left-color: #10b981;
+}
+
+.info-block h4 {
+    font-size: 20px;
+    margin: 0 0 8px 0;
+}
+
+.info-block p {
+    font-size: 16px;
+    margin: 0;
+}
+
+.tag-pos { color: #10b981; font-weight: 700; }
+.tag-neg { color: #f59e0b; font-weight: 700; }
+
+/* Custom Image Grid for Slide 2 (User's Screenshots) */
+.user-images-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    height: 100%;
+    justify-content: center;
+}
+
+.img-card {
+    background: #ffffff; /* Fondo blanco para resaltar tus capturas claras */
+    border-radius: 12px;
+    border: 2px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.img-card.large {
+    height: 220px;
+}
+
+.img-card img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain; /* Para que no se recorte nada de tu flujo */
+}
+
+.images-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    height: 160px;
+}
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Introducción -->
+<div class="slide-container bleed-image-layout" id="slide1">
+    <div class="content-container">
+        <div class="bleed-text-side">
+            <h1>El Ecosistema <br><span class="text-accent-blue">Definitivo</span></h1>
+            
+            <h3 style="font-size: 24px; margin-top: 20px; color: #f8fafc;">El Reto</h3>
+            <p>Escalar operaciones comerciales sin multiplicar los costos operativos ni el tiempo de desarrollo.</p>
+            
+            <h3 style="font-size: 24px; margin-top: 10px; color: #f8fafc;">La Solución</h3>
+            <p>Un stack tecnológico ágil, impulsado por IA y orquestación avanzada.</p>
+
+            <h3 style="font-size: 24px; margin-top: 20px; color: #38bdf8;">Nuestro Stack:</h3>
+            <ul style="list-style: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 18px; line-height: 1.6;">
+                <li style="margin-bottom: 8px;"><strong style="color: white;">GHL:</strong> Motor frontal (CRM, embudos, comunicación).</li>
+                <li style="margin-bottom: 8px;"><strong style="color: white;">n8n:</strong> Orquestador maestro para lógica compleja.</li>
+                <li style="margin-bottom: 8px;"><strong style="color: white;">Claude Code + Antigravity:</strong> Turbo de desarrollo.</li>
+            </ul>
+        </div>
+    </div>
+    <div class="image-container">
+        <!-- Imagen de portada genérica -->
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/6622011146437187482" alt="Fondo oscuro tecnológico abstracto con nodos de conexión azules">
+    </div>
+</div>
+
+<!-- Slide 2: Flujos de GHL (CON TUS IMÁGENES REALES) -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">Flujos en Acción: <span class="text-accent-blue">Eficiencia GHL</span></h2>
+    <div class="content-area">
+        <div class="two-column">
+            
+            <!-- Columna de Texto -->
+            <div>
+                <p class="subtitle" style="margin-bottom: 20px;">Automatizaciones base implementadas:</p>
+                
+                <div class="info-block">
+                    <h4>1. Seguimiento Automático (Nurturing)</h4>
+                    <p>El sistema aplica tiempos de espera estratégicos (Waits) y envía correos secuenciales evaluando el comportamiento en tiempo real.</p>
+                </div>
+
+                <div class="info-block green-accent">
+                    <h4>2. Gestión Inteligente de Reseñas</h4>
+                    <p>Filtro de reputación activado por IA:</p>
+                    <ul style="margin-top: 10px; font-size: 15px; padding-left: 20px; color: #cbd5e1;">
+                        <li style="margin-bottom: 5px;"><span class="tag-pos">4 a 5 estrellas:</span> IA responde en 15 minutos automáticamente.</li>
+                        <li><span class="tag-neg">1 a 3 estrellas:</span> Envía Notificación Interna para abordar el caso.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Columna de Imágenes (TUS CAPTURAS) -->
+            <div class="user-images-stack">
+                <!-- Imagen 1: Flujo Nurturing -->
+                <div class="img-card large">
+                    <img src="image_c576c2.png" alt="Flujo Nurturing de GHL">
+                </div>
+                
+                <!-- Fila de Imágenes 2 y 3: Reseñas AI y Notificación -->
+                <div class="images-row">
+                    <div class="img-card">
+                        <img src="image_c57de5.png" alt="Configuración de IA para reseñas en GHL">
+                    </div>
+                    <div class="img-card">
+                        <img src="image_c584ec.png" alt="Flujo de Notificación Interna">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Potencia con n8n -->
+<div class="slide-container bleed-image-layout" id="slide3">
+    <div class="content-container">
+        <div class="bleed-text-side">
+            <h2 class="slide-title" style="margin-bottom: 20px;">Potencia con <span class="text-accent-green">n8n</span></h2>
+            
+            <p style="font-size: 22px; margin-bottom: 40px; color: #94a3b8;">Los flujos nativos de GHL son excelentes, pero cuando necesitamos <strong>escalar la experiencia</strong>, pasamos a n8n.</p>
+            
+            <h3 style="font-size: 26px; margin-bottom: 10px; color: #f8fafc;">Chatbots Fluidos e Inteligentes</h3>
+            <p>Mientras GHL maneja lo básico, en n8n construimos asistentes conversacionales hiper-realistas. Se conectan a cualquier base de datos externa y manejan contexto complejo.</p>
+            
+            <h3 style="font-size: 26px; margin-top: 20px; margin-bottom: 10px; color: #f8fafc;">Desarrollo Ágil</h3>
+            <p>Construimos y desplegamos estos sistemas robustos con <strong>Claude Code</strong> y <strong>Antigravity</strong> en la terminal. Implementamos en días lo que a otros les toma meses.</p>
+
+            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p style="font-size: 24px; color: #38bdf8; font-weight: 700; margin: 0;">GHL optimiza el presente, n8n construye el futuro.</p>
+            </div>
+        </div>
+    </div>
+    <div class="image-container">
+         <!-- Imagen de cierre genérica -->
+        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/17366222312975886150" alt="Infraestructura compleja de servidores o cerebro futurista de IA brillando en azul">
+    </div>
+</div>
+
+</body>
+</html>
+```
