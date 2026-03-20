@@ -3,351 +3,336 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GHL + n8n Presentación Interactiva</title>
+    <title>GHL + n8n | Presentación Interactiva Premium</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-/* 1. THE SETUP */
+        :root {
+            --bg-dark: #020617;
+            --accent-blue: #38bdf8;
+            --accent-green: #10b981;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass-bg: rgba(15, 23, 42, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
 
-* {
-  box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-p {
-  margin: 0;
-  margin-bottom: 15px;
-}
+        body {
+            background-color: #0f172a;
+            color: var(--text-main);
+            font-family: 'Urbanist', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-body {
-  background-color: #e2e8f0;
-  display: grid;
-  gap: 30px;
-  grid-template-columns: 1fr;
-  margin: 0;
-  min-height: 100vh;
-  padding: 30px 0;
-  place-items: center;
-}
+        /* Container for slides */
+        .presentation {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            padding: 50px 20px;
+            align-items: center;
+        }
 
-.slide-container {
-  align-items: center;
-  background-color: #020617; 
-  border-radius: 16px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  font-family: 'Urbanist', sans-serif;
-  height: 720px;
-  justify-content: center;
-  overflow: hidden;
-  padding: 60px 80px; 
-  position: relative;
-  width: 1280px;
-}
+        /* Base Slide Style */
+        .slide {
+            width: 100%;
+            max-width: 1280px;
+            min-height: 720px;
+            background-color: var(--bg-dark);
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.slide-container::before {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 30px 30px;
-  content: '';
-  height: 100%;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 0;
-}
+        .slide:hover {
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
 
-.slide-container > * {
-  position: relative;
-  z-index: 1;
-}
+        /* Grid Background Effect */
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+        }
 
-/* 2. CONSISTENT TYPOGRAPHY */
+        /* Layout Types */
+        .slide-content {
+            flex: 1;
+            padding: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 1;
+            position: relative;
+        }
 
-.slide-container h1,
-.slide-container h2,
-.slide-container h3,
-.slide-container h4 {
-  color: #f8fafc;
-  font-weight: 700;
-  font-family: 'Urbanist', sans-serif;
-  margin: 0;
-}
+        .slide-media {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
 
-.text-accent-blue { color: #38bdf8; }
-.text-accent-green { color: #10b981; }
+        .slide-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 8s ease-in-out;
+        }
 
-.slide-container p,
-.slide-container li,
-.slide-container .subtitle {
-  color: #cbd5e1;
-  font-family: 'Urbanist', sans-serif;
-}
+        .slide:hover .slide-media img {
+            transform: scale(1.05);
+        }
 
-.slide-container h1 {
-  font-size: 70px;
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
+        /* Typography */
+        h1 {
+            font-size: clamp(40px, 6vw, 84px);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
 
-.slide-container .slide-title {
-  font-size: 52px;
-  font-weight: 800;
-  margin-bottom: 30px;
-  text-align: left;
-  width: 100%;
-}
+        h2 {
+            font-size: clamp(32px, 4vw, 56px);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
 
-.slide-container h3 {
-  font-size: 32px;
-  font-weight: 700;
-  margin-bottom: 12px;
-}
+        h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-blue);
+        }
 
-.slide-container p,
-.slide-container li,
-.slide-container .subtitle,
-.slide-container .bleed-text-side p {
-  font-size: 18px;
-  line-height: 1.5;
-  font-weight: 500;
-}
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            max-width: 600px;
+        }
 
-.slide-container .subtitle {
-  font-size: 24px;
-  font-weight: 500;
-  margin: 0 auto 20px;
-  color: #94a3b8;
-}
+        .text-gradient-blue {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.slide-container .content-area {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  width: 100%;
-}
+        .text-gradient-green {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-/* 3. LAYOUT DEFINITIONS */
+        /* List styling */
+        .feature-list {
+            list-style: none;
+            margin-top: 30px;
+        }
 
-.two-column {
-  align-items: stretch;
-  display: grid;
-  grid-template-columns: 1fr 1fr; 
-  gap: 40px;
-  width: 100%;
-}
+        .feature-list li {
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-dim);
+        }
 
-/* `Bleed_Image_Right` layout (Slide 1 y 3) */
-.slide-container.bleed-image-layout {
-  align-items: start;
-  display: grid;
-  gap: 0; 
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding: 0; 
-}
+        .feature-list li i {
+            color: var(--accent-blue);
+            font-size: 14px;
+        }
 
-.slide-container.bleed-image-layout > .content-container {
-  padding: 80px; 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-}
+        /* Slide 2 Specifics (Image Stack) */
+        .image-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            padding: 40px;
+        }
 
-.slide-container.bleed-image-layout > .image-container {
-  height: 100%;
-  overflow: hidden;
-  width: 100%;
-}
+        .img-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
 
-.slide-container.bleed-image-layout img.bleed-image-side {
-  display: block;
-  height: 720px; 
-  object-fit: cover;
-  object-position: center;
-  width: 100%;
-}
+        .img-card:hover {
+            transform: scale(1.02);
+            border-color: var(--accent-blue);
+        }
 
-.slide-container.bleed-image-layout .bleed-text-side {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+        .img-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
 
-.slide-container.bleed-image-layout .bleed-text-side p {
-  margin-bottom: 1.2rem;
-}
+        .img-card.large {
+            grid-column: span 2;
+            height: 300px;
+        }
 
-/* Custom Text Blocks for Slide 2 */
-.info-block {
-    background-color: rgba(30, 41, 59, 0.5); 
-    border-left: 4px solid #38bdf8;
-    border-radius: 0 12px 12px 0;
-    padding: 20px;
-    margin-bottom: 20px;
-}
+        .img-card.small {
+            height: 200px;
+        }
 
-.info-block.green-accent {
-    border-left-color: #10b981;
-}
+        /* Info blocks */
+        .info-card {
+            background: rgba(30, 41, 59, 0.4);
+            border-left: 4px solid var(--accent-blue);
+            padding: 24px;
+            border-radius: 0 16px 16px 0;
+            margin-top: 24px;
+            transition: background 0.3s ease;
+        }
 
-.info-block h4 {
-    font-size: 20px;
-    margin: 0 0 8px 0;
-}
+        .info-card:hover {
+            background: rgba(30, 41, 59, 0.6);
+        }
 
-.info-block p {
-    font-size: 16px;
-    margin: 0;
-}
+        .info-card h4 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: white;
+        }
 
-.tag-pos { color: #10b981; font-weight: 700; }
-.tag-neg { color: #f59e0b; font-weight: 700; }
+        .info-card p {
+            font-size: 16px;
+            margin: 0;
+        }
 
-/* Custom Image Grid for Slide 2 (User's Screenshots) */
-.user-images-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    height: 100%;
-    justify-content: center;
-}
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.img-card {
-    background: #ffffff; /* Fondo blanco para resaltar tus capturas claras */
-    border-radius: 12px;
-    border: 2px solid rgba(56, 189, 248, 0.3);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-}
+        .slide-content > * {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
 
-.img-card.large {
-    height: 220px;
-}
-
-.img-card img {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: contain; /* Para que no se recorte nada de tu flujo */
-}
-
-.images-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    height: 160px;
-}
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .slide {
+                flex-direction: column;
+                min-height: auto;
+            }
+            .slide-media {
+                height: 400px;
+            }
+            .slide-content {
+                padding: 40px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- Slide 1: Introducción -->
-<div class="slide-container bleed-image-layout" id="slide1">
-    <div class="content-container">
-        <div class="bleed-text-side">
-            <h1>El Ecosistema <br><span class="text-accent-blue">Definitivo</span></h1>
-            
-            <h3 style="font-size: 24px; margin-top: 20px; color: #f8fafc;">El Reto</h3>
+<div class="presentation">
+
+    <!-- Slide 1: Introducción -->
+    <section class="slide" id="slide1">
+        <div class="slide-content">
+            <h1>El Ecosistema <br><span class="text-gradient-blue">Definitivo</span></h1>
+            <h3>El Reto Moderno</h3>
             <p>Escalar operaciones comerciales sin multiplicar los costos operativos ni el tiempo de desarrollo.</p>
             
-            <h3 style="font-size: 24px; margin-top: 10px; color: #f8fafc;">La Solución</h3>
-            <p>Un stack tecnológico ágil, impulsado por IA y orquestación avanzada.</p>
+            <h3>La Solución Ágil</h3>
+            <p>Un stack tecnológico impulsado por IA, diseñado para la orquestación avanzada y la automatización total.</p>
 
-            <h3 style="font-size: 24px; margin-top: 20px; color: #38bdf8;">Nuestro Stack:</h3>
-            <ul style="list-style: none; padding: 0; margin: 0; color: #cbd5e1; font-size: 18px; line-height: 1.6;">
-                <li style="margin-bottom: 8px;"><strong style="color: white;">GHL:</strong> Motor frontal (CRM, embudos, comunicación).</li>
-                <li style="margin-bottom: 8px;"><strong style="color: white;">n8n:</strong> Orquestador maestro para lógica compleja.</li>
-                <li style="margin-bottom: 8px;"><strong style="color: white;">Claude Code + Antigravity:</strong> Turbo de desarrollo.</li>
+            <ul class="feature-list">
+                <li><i class="fas fa-microchip"></i> <strong>GHL:</strong> El motor frontal (CRM, Embudos, Comunicación).</li>
+                <li><i class="fas fa-network-wired"></i> <strong>n8n:</strong> El cerebro que orquesta flujos complejos.</li>
+                <li><i class="fas fa-bolt"></i> <strong>IA Generativa:</strong> Acelera el desarrollo 10x.</li>
             </ul>
         </div>
-    </div>
-    <div class="image-container">
-        <!-- Imagen de portada genérica -->
-        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/6622011146437187482" alt="Fondo oscuro tecnológico abstracto con nodos de conexión azules">
-    </div>
-</div>
+        <div class="slide-media">
+            <img src="intro_tech_bg.png" alt="Futuristic Tech Nodes Background">
+        </div>
+    </section>
 
-<!-- Slide 2: Flujos de GHL (CON TUS IMÁGENES REALES) -->
-<div class="slide-container" id="slide2">
-    <h2 class="slide-title">Flujos en Acción: <span class="text-accent-blue">Eficiencia GHL</span></h2>
-    <div class="content-area">
-        <div class="two-column">
-            
-            <!-- Columna de Texto -->
-            <div>
-                <p class="subtitle" style="margin-bottom: 20px;">Automatizaciones base implementadas:</p>
-                
-                <div class="info-block">
-                    <h4>1. Seguimiento Automático (Nurturing)</h4>
-                    <p>El sistema aplica tiempos de espera estratégicos (Waits) y envía correos secuenciales evaluando el comportamiento en tiempo real.</p>
-                </div>
+    <!-- Slide 2: GHL Flows -->
+    <section class="slide" id="slide2">
+        <div class="slide-content">
+            <h2>Eficiencia <span class="text-gradient-blue">GHL</span></h2>
+            <p>Automatizaciones que transforman la gestión de clientes y la reputación online.</p>
 
-                <div class="info-block green-accent">
-                    <h4>2. Gestión Inteligente de Reseñas</h4>
-                    <p>Filtro de reputación activado por IA:</p>
-                    <ul style="margin-top: 10px; font-size: 15px; padding-left: 20px; color: #cbd5e1;">
-                        <li style="margin-bottom: 5px;"><span class="tag-pos">4 a 5 estrellas:</span> IA responde en 15 minutos automáticamente.</li>
-                        <li><span class="tag-neg">1 a 3 estrellas:</span> Envía Notificación Interna para abordar el caso.</li>
-                    </ul>
-                </div>
+            <div class="info-card">
+                <h4>Seguimiento Automático</h4>
+                <p>Nurturing inteligente con tiempos de espera estratégicos y respuesta según comportamiento.</p>
             </div>
 
-            <!-- Columna de Imágenes (TUS CAPTURAS) -->
-            <div class="user-images-stack">
-                <!-- Imagen 1: Flujo Nurturing -->
+            <div class="info-card" style="border-left-color: var(--accent-green);">
+                <h4>Gestión de Reseñas AI</h4>
+                <p>Respuesta inmediata a reseñas de 5 estrellas y alerta interna para corrección inmediata de experiencias negativas.</p>
+            </div>
+        </div>
+        <div class="slide-media">
+            <div class="image-showcase">
                 <div class="img-card large">
-                    <img src="image_c576c2.png" alt="Flujo Nurturing de GHL">
+                    <img src="image_c576c2.png" alt="GHL Nurturing Flow">
                 </div>
-                
-                <!-- Fila de Imágenes 2 y 3: Reseñas AI y Notificación -->
-                <div class="images-row">
-                    <div class="img-card">
-                        <img src="image_c57de5.png" alt="Configuración de IA para reseñas en GHL">
-                    </div>
-                    <div class="img-card">
-                        <img src="image_c584ec.png" alt="Flujo de Notificación Interna">
-                    </div>
+                <div class="img-card small">
+                    <img src="image_c57de5.png" alt="GHL Review AI Config">
+                </div>
+                <div class="img-card small">
+                    <img src="image_c584ec.png" alt="GHL Internal Notification">
                 </div>
             </div>
-
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- Slide 3: Potencia con n8n -->
-<div class="slide-container bleed-image-layout" id="slide3">
-    <div class="content-container">
-        <div class="bleed-text-side">
-            <h2 class="slide-title" style="margin-bottom: 20px;">Potencia con <span class="text-accent-green">n8n</span></h2>
+    <!-- Slide 3: n8n Power -->
+    <section class="slide" id="slide3">
+        <div class="slide-content">
+            <h2>Potencia con <span class="text-gradient-green">n8n</span></h2>
+            <p>Donde GHL termina, n8n comienza. Escalamos la experiencia del cliente con lógica sin límites.</p>
             
-            <p style="font-size: 22px; margin-bottom: 40px; color: #94a3b8;">Los flujos nativos de GHL son excelentes, pero cuando necesitamos <strong>escalar la experiencia</strong>, pasamos a n8n.</p>
-            
-            <h3 style="font-size: 26px; margin-bottom: 10px; color: #f8fafc;">Chatbots Fluidos e Inteligentes</h3>
-            <p>Mientras GHL maneja lo básico, en n8n construimos asistentes conversacionales hiper-realistas. Se conectan a cualquier base de datos externa y manejan contexto complejo.</p>
-            
-            <h3 style="font-size: 26px; margin-top: 20px; margin-bottom: 10px; color: #f8fafc;">Desarrollo Ágil</h3>
-            <p>Construimos y desplegamos estos sistemas robustos con <strong>Claude Code</strong> y <strong>Antigravity</strong> en la terminal. Implementamos en días lo que a otros les toma meses.</p>
+            <h3>Chatbots de Contexto Real</h3>
+            <p>Asistentes conversacionales que se conectan a cualquier base de datos y manejan flujos críticos.</p>
 
-            <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
-                <p style="font-size: 24px; color: #38bdf8; font-weight: 700; margin: 0;">GHL optimiza el presente, n8n construye el futuro.</p>
+            <h3>Desarrollo Hiper-Rápido</h3>
+            <p>Implementamos sistemas robustos en días, no meses, utilizando herramientas de IA de última generación.</p>
+
+            <div style="margin-top: 40px; padding: 20px; border-top: 1px solid var(--glass-border);">
+                <p style="font-size: 24px; color: var(--accent-blue); font-weight: 700;">GHL optimiza el presente, n8n construye el futuro.</p>
             </div>
         </div>
-    </div>
-    <div class="image-container">
-         <!-- Imagen de cierre genérica -->
-        <img class="bleed-image-side" src="http://googleusercontent.com/image_collection/image_retrieval/17366222312975886150" alt="Infraestructura compleja de servidores o cerebro futurista de IA brillando en azul">
-    </div>
+        <div class="slide-media">
+            <img src="outro_ai_brain.png" alt="Futuristic AI Brain Background">
+        </div>
+    </section>
+
 </div>
 
 </body>
 </html>
-```
